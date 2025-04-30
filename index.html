@@ -1,0 +1,1011 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1" name="viewport" />
+  <title>Creating Art Through Code</title>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: "Montserrat", "Roboto", sans-serif;
+      background-color: #0a192f;
+      color: #ccd6f6;
+      line-height: 1.6;
+    }
+    
+    a {
+      color: #64ffda;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #52e0c4;
+      text-decoration: underline;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+    /* Container */
+    .container {
+      max-width: 1120px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    /* Navbar */
+    nav {
+      background-color: #112240;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+    nav .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+    nav .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #64ffda;
+    }
+    nav .logo img {
+      border-radius: 9999px;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border: 2px solid #64ffda;
+    }
+    nav .nav-links {
+      display: none;
+      gap: 2rem;
+      font-weight: 600;
+      color: #8892b0;
+    }
+    nav .nav-links a {
+      color: #8892b0;
+    }
+    nav .nav-links a:hover {
+      color: #64ffda;
+    }
+    nav .menu-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #8892b0;
+      cursor: pointer;
+    }
+    nav .menu-btn:focus {
+      outline: 2px solid #64ffda;
+      outline-offset: 2px;
+    }
+    nav .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background-color: #112240;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+    }
+    nav .mobile-menu a {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #233554;
+      font-weight: 600;
+      color: #8892b0;
+    }
+    nav .mobile-menu a:hover {
+      background-color: #233554;
+      color: #64ffda;
+    }
+    /* Hero */
+    header {
+      padding-top: 96px;
+      background-color: transparent;
+      padding-bottom: 4rem;
+    }
+    .hero-inner {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: center;
+      gap: 2rem;
+      max-width: 1120px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .hero-text {
+      text-align: center;
+    }
+    .hero-text h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #ccd6f6;
+      line-height: 1.1;
+      margin: 0;
+    }
+    .hero-text p {
+      margin-top: 1rem;
+      font-size: 1.125rem;
+      color: #8892b0;
+      max-width: 28rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-buttons {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background-color: #64ffda;
+      color: #0a192f;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #52e0c4;
+      outline: none;
+    }
+    .btn-secondary {
+      background-color: transparent;
+      color: #64ffda;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      border: 2px solid #64ffda;
+      cursor: pointer;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      background-color: rgba(100, 255, 218, 0.1);
+      outline: none;
+    }
+    .hero-image {
+      max-width: 400px;
+      width: 100%;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px rgb(0 0 0 / 0.3);
+      transition: transform 0.3s ease;
+    }
+    .hero-image:hover {
+      transform: scale(1.05);
+    }
+    /* Sections common */
+    section {
+      margin: 3rem auto;
+      max-width: 1120px;
+      padding: 2rem 1.5rem;
+      border-radius: 0.5rem;
+      background-color: #112240;
+      color: #ccd6f6;
+    }
+    section h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #64ffda;
+      text-align: center;
+    }
+    /* About */
+    #about p {
+      color: #8892b0;
+      font-size: 1.125rem;
+      margin-bottom: 1rem;
+      white-space: pre-line;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    #about ul {
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.25rem;
+      color: #64ffda;
+      font-weight: 600;
+      font-size: 1.125rem;
+      list-style-type: disc;
+      margin-top: 1rem;
+      margin-bottom: 0;
+      text-align: center;
+    }
+    /* Portfolio & Services grid */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    @media (min-width: 640px) {
+      .grid-2col {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    /* Portfolio cards */
+    .portfolio-card,
+    .service-card {
+      background-color: #112240;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+      padding: 1.5rem;
+      color: #ccd6f6;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+    .portfolio-card:hover,
+    .service-card:hover {
+      box-shadow: 0 10px 15px rgb(0 0 0 / 0.5);
+      transform: translateY(-6px);
+    }
+    .portfolio-title,
+    .service-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #64ffda;
+      margin-bottom: 0.5rem;
+      white-space: pre-line;
+    }
+    .portfolio-desc,
+    .service-desc {
+      color: #8892b0;
+      flex-grow: 1;
+      margin-bottom: 1rem;
+      white-space: pre-line;
+    }
+    .portfolio-lang,
+    .service-lang {
+      color: #64ffda;
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: right;
+    }
+    /* Services photos grid */
+    .services-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (min-width: 640px) {
+      .services-photos {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .service-photo {
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      background-color: #112240;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .service-photo:hover {
+      box-shadow: 0 10px 15px rgb(0 0 0 / 0.5);
+      transform: translateY(-6px);
+    }
+    .service-photo img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+      border-radius: 0.5rem;
+      transition: transform 0.3s ease;
+    }
+    .service-photo:hover img {
+      transform: scale(1.05);
+    }
+    /* Testimonials */
+    #testimonials p {
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      font-style: italic;
+      color: #8892b0;
+      font-size: 1.125rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    #testimonials .testimonial-author {
+      text-align: center;
+      font-weight: 600;
+      color: #64ffda;
+      margin-bottom: 2rem;
+    }
+    /* Footer */
+    footer {
+      background-color: #112240;
+      border-top: 1px solid #233554;
+      padding: 2rem 1.5rem;
+      margin-top: 4rem;
+      color: #8892b0;
+    }
+    footer .footer-inner {
+      max-width: 1120px;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.875rem;
+    }
+    footer .social-links {
+      display: flex;
+      gap: 1.5rem;
+      color: #8892b0;
+    }
+    footer .social-links a {
+      font-size: 1.25rem;
+      transition: color 0.3s ease;
+    }
+    footer .social-links a:hover,
+    footer .social-links a:focus {
+      color: #64ffda;
+      outline: none;
+    }
+    /* Contact Me Section Styles (from provided) */
+    #contact-me {
+      background-color: #07182f;
+      border-radius: 0.5rem;
+      padding: 2rem 1.5rem;
+      color: white;
+      max-width: 960px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #contact-me .container {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    #contact-me .left,
+    #contact-me .right {
+      flex: 1 1 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    #contact-me h2 {
+      font-weight: 400;
+      font-size: 24px;
+      margin: 0;
+      color: #64ffda;
+    }
+    #contact-me p.description {
+      color: #a0a0a0;
+      max-width: 400px;
+      line-height: 1.5;
+      margin: 0;
+    }
+    #contact-me .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 400px;
+    }
+    #contact-me .contact-item {
+      background-color: #15304f;
+      border-radius: 16px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    #contact-me .icon {
+      font-size: 28px;
+      color: white;
+      width: 36px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    #contact-me .contact-text {
+      display: flex;
+      flex-direction: column;
+    }
+    #contact-me .contact-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin: 0 0 4px 0;
+    }
+    #contact-me .contact-info {
+      font-size: 12px;
+      color: #a0a0a0;
+      margin: 0;
+    }
+    #contact-me .right {
+      background-color: #15304f;
+      border-radius: 32px;
+      min-height: 280px;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+    #contact-me .form-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    #contact-me .form-group {
+      flex: 1 1 48%;
+      display: flex;
+      flex-direction: column;
+    }
+    #contact-me label {
+      font-size: 12px;
+      color: #a0a0a0;
+      margin-bottom: 4px;
+    }
+    #contact-me input[type="text"],
+    #contact-me textarea {
+      background-color: #07182f;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      padding: 10px 14px;
+      font-size: 14px;
+      resize: vertical;
+      font-family: "Poppins", sans-serif;
+      box-sizing: border-box;
+    }
+    #contact-me input[type="text"]::placeholder,
+    #contact-me textarea::placeholder {
+      color: #6b7a99;
+    }
+    #contact-me textarea {
+      min-height: 100px;
+      margin-top: 8px;
+    }
+    #contact-me button {
+      background-color: #07182f;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 0;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: auto;
+      transition: background-color 0.3s ease;
+      width: 100%;
+    }
+    #contact-me button:hover {
+      background-color: #0a2a5a;
+    }
+    @media (max-width: 640px) {
+      nav .nav-links {
+        display: none !important;
+      }
+      nav .menu-btn {
+        display: block;
+      }
+      nav .mobile-menu {
+        display: none;
+        flex-direction: column;
+      }
+      #contact-me .container {
+        flex-direction: column;
+      }
+      #contact-me .left,
+      #contact-me .right {
+        flex: 1 1 100%;
+      }
+      #contact-me .contact-list {
+        max-width: 100%;
+      }
+      #contact-me .form-row {
+        flex-direction: column;
+      }
+      #contact-me .form-group {
+        flex: 1 1 100%;
+      }
+      .grid-2col {
+        grid-template-columns: 1fr !important;
+      }
+      .hero-inner {
+        flex-direction: column-reverse !important;
+        text-align: center !important;
+      }
+      .hero-text {
+        max-width: 100% !important;
+      }
+    }
+    @media (min-width: 768px) {
+      nav .nav-links {
+        display: flex !important;
+      }
+      nav .menu-btn {
+        display: none !important;
+      }
+      nav .mobile-menu {
+        display: none !important;
+      }
+      .hero-inner {
+        flex-direction: row !important;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .hero-text {
+        text-align: left !important;
+        max-width: 50% !important;
+        margin: 0;
+      }
+      .hero-text p {
+        margin-left: 0;
+        margin-right: 0;
+      }
+      .hero-buttons {
+        justify-content: flex-start;
+      }
+      footer .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+      section#about {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div aria-label="Primary Navigation" class="container nav-inner" role="navigation">
+      <a aria-label="Kate homepage" class="logo" href="#home">
+      
+      
+        Kate
+      </a>
+      <div aria-label="Primary menu" class="nav-links" role="menubar">
+        <a href="#home" role="menuitem" tabindex="0">Home</a>
+        <a href="#about" role="menuitem" tabindex="0">About</a>
+        <a href="#portfolio" role="menuitem" tabindex="0">Portfolio</a>
+        <a href="#services" role="menuitem" tabindex="0">Services</a>
+        <a href="#blog" role="menuitem" tabindex="0">Blog</a>
+        <a href="#testimonials" role="menuitem" tabindex="0">Testimonials</a>
+        <a href="#contact-me" role="menuitem" tabindex="0">Contact Me</a>
+      </div>
+      <button
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label="Toggle menu"
+        class="menu-btn"
+        id="menu-btn"
+      >
+        <i aria-hidden="true" class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div aria-label="Mobile menu" class="mobile-menu" id="mobile-menu" role="menu">
+      <a href="#home" role="menuitem" tabindex="-1">Home</a>
+      <a href="#about" role="menuitem" tabindex="-1">About</a>
+      <a href="#portfolio" role="menuitem" tabindex="-1">Portfolio</a>
+      <a href="#services" role="menuitem" tabindex="-1">Services</a>
+      <a href="#blog" role="menuitem" tabindex="-1">Blog</a>
+      <a href="#testimonials" role="menuitem" tabindex="-1">Testimonials</a>
+      <a href="#contact-me" role="menuitem" tabindex="-1">Contact Me</a>
+    </div>
+  </nav>
+
+  <main id="home">
+    <header>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h1>Hi, Kate here.</h1>
+          <p>
+            I’m an Information Technology student. I create art through code and technology, and I work as commission-based web developer.
+          </p>
+          <div class="hero-buttons">
+            <a class="btn-primary" href="#portfolio">View Portfolio</a>
+            <a class="btn-secondary" href="#contact-me">Contact Me</a>
+          </div>
+        </div>
+        <img 
+        src="kate.jpg" 
+        alt="me" 
+        class="hero-image" 
+        height="300" 
+        width="450">
+        
+      </div>
+    </header>
+
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About Me</h2>
+      <p>
+        I’m currently an Information Technology freshman at University of Eastern
+        Pangasinan in Binalonan, Pangasinan Philippines.
+
+        I’m an introvert by nature—quiet, thoughtful, and observant. I enjoy
+        spending time in calm environments, and I have a big heart for animals.
+        They inspire me in their own peaceful and genuine way.
+      </p>
+      <p>Here are some Languages I’ve studied:</p>
+      <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JAVASCRIPT</li>
+        <li>C++</li>
+        <li>VB.NET</li>
+      </ul>
+    </section>
+
+    <section id="portfolio" aria-labelledby="portfolio-title">
+      <h2 id="portfolio-title">Portfolio</h2>
+      <div class="grid-2col">
+        <article class="portfolio-card" tabindex="0" aria-label="Project: Library Book Management System">
+          <h3 class="portfolio-title">
+            Library Book Management System
+          </h3>
+          <p class="portfolio-desc">
+            This system is designed to simplify the management of library
+            operations. It allows librarians to efficiently manage book
+            inventories.
+          </p>
+          <p class="portfolio-lang">VB.NET</p>
+        </article>
+        <article class="portfolio-card" tabindex="0" aria-label="Project: Library Book Management System">
+          <h3 class="portfolio-title">
+           Electronic Health Record System
+          </h3>
+          <p class="portfolio-desc">
+            A web platform for managing patient records, appointments, and medical histories, designed to streamline healthcare services.<br />Collaborated Website 
+
+          </p>
+          <p class="portfolio-lang">HTML, CSS, Javascript        </p>
+        </article>
+        <article class="portfolio-card" tabindex="0" aria-label="Project: Employee Management System">
+          <h3 class="portfolio-title">
+            Employee Management System
+          </h3>
+          <p class="portfolio-desc">
+            This system is designed to simplify the management of library
+            operations. It allows librarians to efficiently manage book
+            inventories.
+          </p>
+          <p class="portfolio-lang">VB.NET</p>
+        </article>
+        <article class="portfolio-card" tabindex="0" aria-label="Project: Learning Management System">
+          <h3 class="portfolio-title">
+            Learning Management System
+          </h3>
+          <p class="portfolio-desc">
+            A VB.NET application connected to a database that manages courses and
+            student enrollments.
+          </p>
+          <p class="portfolio-lang">VB.NET</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="services" aria-labelledby="services-title">
+      <h2 id="services-title">Services</h2>
+      <p style="text-align:center; max-width:720px; margin: 0 auto 2rem auto; color:#8892b0;">
+        Course Related Services
+      </p>
+      <div class="services-photos" aria-label="Course related services photos">
+        <div class="service-photo" tabindex="0" aria-label="Course related service photo 1">
+          <img
+            alt="E-commerce Web"
+            src="https://storage.googleapis.com/a1aa/image/54f5075c-e1ac-467e-f87a-1f1a0bf0ea69.jpg"
+            height="120"
+            width="auto"
+          />
+        </div>
+        <div class="service-photo" tabindex="0" aria-label="Course related service photo 2">
+          <img
+            alt="Photography"
+            src="https://storage.googleapis.com/a1aa/image/97b32a76-6599-43e2-2b1b-802f06836b9b.jpg"
+            height="120"
+            width="auto"
+          />
+        </div>
+        <div class="service-photo" tabindex="0" aria-label="Course related service photo 3">
+          <img
+            alt="Task management app"
+            src="https://storage.googleapis.com/a1aa/image/5a239d48-83be-4260-5765-9a94d5285d77.jpg"
+            height="120"
+            width="auto"
+          />
+        </div>
+        <div class="service-photo" tabindex="0" aria-label="Course related service photo 4">
+          <img
+            alt="Blog platform"
+            src="https://storage.googleapis.com/a1aa/image/1c936f8a-8bc7-4e7d-c7e1-751d0c791981.jpg"
+            height="120"
+            width="auto"
+          />
+        </div>
+      </div>
+      <p style="text-align:center; max-width:720px; margin: 3rem auto 2rem auto; color:#8892b0;">
+        Non Course Related Services
+      </p>
+      <div class="services-photos" aria-label="Non course related services photos">
+        <div class="service-photo" tabindex="0" aria-label="Non course related service photo 1">
+          <img
+          alt="crochet"
+            src="bunny.jpg"
+            height="120"
+            width="auto"
+          />
+        </div>
+        <div class="service-photo" tabindex="0" aria-label="Non course related service photo 2">
+          <img
+            alt="crochet"
+            src="coaster.jpg"
+            height="120"
+            width="auto"
+          />
+        </div>
+        <div class="service-photo" tabindex="0" aria-label="Non course related service photo 3">
+          <imgalt="crochet"
+            src="mushroom.jpg"
+            height="120"
+            width="auto"
+          />
+        </div>
+        <div class="service-photo" tabindex="0" aria-label="Non course related service photo 4">
+          <img
+          alt="crochet"
+            src="pitsi.jpg"
+            height="120"
+            width="auto"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section id="blog" aria-labelledby="blog-title">
+      <h2 id="blog-title">Blog</h2>
+      <article
+        aria-label="Blog post: Understanding React Hooks: A Beginner's Guide"
+        class="portfolio-card"
+        tabindex="0"
+      >
+        <h3 class="portfolio-title">
+          Understanding React Hooks: A Beginner's Guide
+        </h3>
+        <p class="portfolio-desc">
+          React Hooks have revolutionized how we write React components. This
+          post covers the basics of useState, useEffect, and custom hooks.
+        </p>
+        <a href="#" aria-label="Read more about Understanding React Hooks: A Beginner's Guide"
+          >Read More</a
+        >
+      </article>
+      <article
+        aria-label="Blog post: 10 Tips for Writing Clean and Maintainable CSS"
+        class="portfolio-card"
+        tabindex="0"
+      >
+        <h3 class="portfolio-title">10 Tips for Writing Clean and Maintainable CSS</h3>
+        <p class="portfolio-desc">
+          Writing CSS can get messy quickly. Here are ten tips to keep your
+          stylesheets clean, modular, and easy to maintain.
+        </p>
+        <a href="#" aria-label="Read more about 10 Tips for Writing Clean and Maintainable CSS"
+          >Read More</a
+        >
+      </article>
+      <article
+        aria-label="Blog post: Getting Started with Tailwind CSS"
+        class="portfolio-card"
+        tabindex="0"
+      >
+        <h3 class="portfolio-title">Getting Started with Tailwind CSS</h3>
+        <p class="portfolio-desc">
+          Tailwind CSS is a utility-first CSS framework that makes styling fast
+          and fun. Learn how to set it up and build your first layout.
+        </p>
+        <a href="#" aria-label="Read more about Getting Started with Tailwind CSS">Read More</a>
+      </article>
+      <article
+        aria-label="Blog post: Building Accessible Web Applications"
+        class="portfolio-card"
+        tabindex="0"
+      >
+        <h3 class="portfolio-title">Building Accessible Web Applications</h3>
+        <p class="portfolio-desc">
+          Accessibility is crucial for inclusive web experiences. This article
+          discusses best practices and tools for building accessible apps.
+        </p>
+        <a href="#" aria-label="Read more about Building Accessible Web Applications">Read More</a>
+      </article>
+      <article
+        aria-label="Blog post: Optimizing Web Performance: Tips and Tricks"
+        class="portfolio-card"
+        tabindex="0"
+      >
+        <h3 class="portfolio-title">Optimizing Web Performance: Tips and Tricks</h3>
+        <p class="portfolio-desc">
+          Slow websites lose users. Discover techniques to optimize your web
+          app’s performance and improve user experience.
+        </p>
+        <a href="#" aria-label="Read more about Optimizing Web Performance: Tips and Tricks">Read More</a>
+      </article>
+    </section>
+
+    <section id="testimonials" aria-labelledby="testimonials-title">
+      <h2 id="testimonials-title">Testimonials</h2>
+      <p>
+       "Ang angas nung vital signs."
+      </p>
+      <p class="testimonial-author">- Nursing student</p>
+      <p>
+        "Maganda to, maganda yung UI"
+      </p>
+      <p class="testimonial-author">- Instructor</p>
+    </section>
+
+    <section id="contact-me" aria-labelledby="contact-me-title">
+      <h2 id="contact-me-title">Get in Touch</h2>
+      <div class="container">
+        <div class="left">
+          <p class="description">
+            Feel free to reach out for project collaborations, or any inquiries.
+            I’m always open to discussing new ideas and exciting projects!
+          </p>
+          <div class="contact-list">
+            <div class="contact-item">
+              <div class="icon"><i class="far fa-envelope"></i></div>
+              <div class="contact-text">
+                <p class="contact-title">Email</p>
+                <p class="contact-info">pasag.katee@gmail.com</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon"><i class="fas fa-phone-alt"></i></div>
+              <div class="contact-text">
+                <p class="contact-title">Phone Number</p>
+                <p class="contact-info">09481220511</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="icon"><i class="fab fa-facebook-f"></i></div>
+              <div class="contact-text">
+                <p class="contact-title">Facebook</p>
+                <p class="contact-info">Kate Angela Pasag</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="sent-by">Sent by:</label>
+              <input
+                type="text"
+                id="sent-by"
+                name="sent-by"
+                placeholder="Your name or email"
+              />
+            </div>
+            <div class="form-group">
+              <label for="sent-to">Sent to:</label>
+              <input
+                type="text"
+                id="sent-to"
+                name="sent-to"
+                value="pasag.katee@gmail.com"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="form-group" style="flex: 1 1 100%">
+            <label for="message">Message:</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Type your message here..."
+            ></textarea>
+          </div>
+          <button type="submit">Send</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>© 2025 Kate. All rights reserved.</p>
+      <div aria-label="Social media links" class="social-links" role="contentinfo">
+        <a
+          aria-label="Twitter"
+          href="https://twitter.com"
+          rel="noopener"
+          target="_blank"
+          ><i aria-hidden="true" class="fab fa-twitter"></i
+        ></a>
+        <a
+          aria-label="GitHub"
+          href="https://github.com"
+          rel="noopener"
+          target="_blank"
+          ><i aria-hidden="true" class="fab fa-github"></i
+        ></a>
+        <a
+          aria-label="LinkedIn"
+          href="https://linkedin.com"
+          rel="noopener"
+          target="_blank"
+          ><i aria-hidden="true" class="fab fa-linkedin"></i
+        ></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    menuBtn.addEventListener("click", () => {
+      const expanded = menuBtn.getAttribute("aria-expanded") === "true" || false;
+      menuBtn.setAttribute("aria-expanded", !expanded);
+      if (mobileMenu.style.display === "flex") {
+        mobileMenu.style.display = "none";
+      } else {
+        mobileMenu.style.display = "flex";
+      }
+    });
+
+    // Close mobile menu when clicking a link
+    const mobileLinks = mobileMenu.querySelectorAll("a");
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.style.display = "none";
+        menuBtn.setAttribute("aria-expanded", false);
+      });
+    });
+
+    // Close mobile menu on window resize if desktop
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 768) {
+        mobileMenu.style.display = "none";
+        menuBtn.setAttribute("aria-expanded", false);
+      }
+    });
+    
+  </script>
+</body>
+</html>
+
+
